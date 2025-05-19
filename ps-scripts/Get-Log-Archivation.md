@@ -1,130 +1,122 @@
-# Get-Log-Archivation PowerShell Script
+# Script de PowerShell para Obtener Archivo de Registros
 
-## Overview
-The **`Get-Log-Archivation`** function automates the archiving of old log files and maintains folder hygiene by compressing and removing outdated files. It is designed to ensure efficient log file management in IT infrastructure.
-Besides material written in the description below, you can also read my article that i published on linked in which I review this problem in slightly different angle [https://www.linkedin.com/pulse/mitigating-security-risks-change-requests-maks-zaikin-lh6xe/?trackingId=JsuYjAPi4B7pWuH6T3oVNw%3D%3D](Mitigating Security Risks in IT Change Requests)
-
----
-
-## Features
-- Archives old log files based on their age.
-- Deletes outdated archive files (`*.zip`).
-- Maintains a detailed log of performed actions in a specified log file.
-- User-configurable parameters for flexibility.
+## Resumen
+La función **`Obtener Archivo de Registros`** automatiza el archivado de archivos de registro antiguos y mantiene la integridad de las carpetas comprimiendo y eliminando archivos obsoletos. Está diseñada para garantizar una gestión eficiente de los archivos de registro en la infraestructura de TI.
+Además del material descrito a continuación, también puede leer mi artículo publicado en LinkedIn, donde analizo este problema desde una perspectiva ligeramente diferente [https://www.linkedin.com/pulse/mitigating-security-risks-change-requests-maks-zaikin-lh6xe/?trackingId=JsuYjAPi4B7pWuH6T3oVNw%3D%3D](Mitigación de Riesgos de Seguridad en Solicitudes de Cambio de TI)
 
 ---
 
-## Parameters
-| Parameter       | Description                                                                 | Mandatory |
-|-----------------|-----------------------------------------------------------------------------|-----------|
-| `OldFilesAge`   | Filters log files for archiving based on the specified age (in days).       | Yes       |
-| `OldCabsAge`    | Removes archive files (`*.zip`) older than the specified age (in days).     | Yes       |
-| `LogFilePath`   | Specifies the path to the log file for saving all actions and statuses.     | Yes       |
+## Características
+- Archiva archivos de registro antiguos según su antigüedad.
+- Elimina archivos obsoletos (`*.zip`).
+- Mantiene un registro detallado de las acciones realizadas en un archivo de registro específico.
+- Parámetros configurables por el usuario para mayor flexibilidad.
 
 ---
 
-## Examples
+## Parámetros
+| Parámetro | Descripción | Obligatorio |
+|-----------------|------------------------------------------------------------------------------|-----------|
+| `OldFilesAge` | Filtra los archivos de registro para archivar según la antigüedad especificada (en días). | Sí |
+| `OldCabsAge` | Elimina los archivos comprimidos (`*.zip`) con una antigüedad mayor a la especificada (en días). | Sí |
+| `LogFilePath` | Especifica la ruta al archivo de registro para guardar todas las acciones y estados. | Sí |
 
-### Example 1: Archive Logs and Remove Old Archives
+---
+
+## Ejemplos
+
+### Ejemplo 1: Archivar registros y eliminar archivos antiguos
 ```powershell
 Get-Log-Archivation -OldFilesAge 7 -OldCabsAge 30 -LogFilePath 'C:\Temp\log.log'
 ```
 
-- Archives log files older than 7 days.
-- Deletes archive files (`*.zip`) older than 30 days.
-- Logs all actions to the file `C:\Temp\log.log`.
+- Archiva archivos de registro con más de 7 días de antigüedad.
+- Elimina archivos de almacenamiento (`*.zip`) con más de 30 días de antigüedad.
+- Registra todas las acciones en el archivo `C:\Temp\log.log`.
 
-### Example 2: A Immediate Archiving and Deletion
+### Ejemplo 2: Archivado y eliminación inmediatos
 ```powershell
 Get-Log-Archivation -OldFilesAge 0 -OldCabsAge 0 -LogFilePath 'C:\Temp\log.log'
 ```
 
-- Archives all log files regardless of age.
-- Deletes all archive files (*.zip) regardless of age.
-- Logs all actions to C:\Temp\log.log.
+- Archiva todos los archivos de registro, independientemente de su antigüedad.
+- Elimina todos los archivos de almacenamiento (*.zip), independientemente de su antigüedad. - Registra todas las acciones en C:\Temp\log.log.
 
-### How It Works
+### Cómo funciona
 
-1. Initialization:
-  - The script initializes with a set of predefined paths for monitoring.
-  - It writes a start message to the specified log file.
+1. Inicialización:
+- El script se inicializa con un conjunto de rutas predefinidas para la monitorización.
+- Escribe un mensaje de inicio en el archivo de registro especificado.
 
-2. Archiving Process:
-  - Identifies log files older than OldFilesAge and compresses them into .zip archives.
-  - Removes the original log files after successful archiving.
+2. Proceso de archivado:
+- Identifica los archivos de registro anteriores a OldFilesAge y los comprime en archivos .zip.
+- Elimina los archivos de registro originales tras un archivado correcto.
 
-3. Cleanup:
-  - Deletes archive files (*.zip) older than OldCabsAge.
+3. Limpieza:
+- Elimina archivos de almacenamiento (*.zip) anteriores a OldCabsAge.
 
-4. Error Handling:
-  - Catches and logs any errors that occur during the process.
+4. Gestión de errores:
+- Detecta y registra cualquier error que se produzca durante el proceso.
 
-5. Completion:
-  - Writes an end message to the log file upon successful execution.
+5. Finalización:
+- Escribe un mensaje de fin en el archivo de registro tras una ejecución correcta.
 
-### ⚠️ IMPORTANT: SECURITY RISK MITIGATION
+### ⚠️ IMPORTANTE: MITIGACIÓN DE RIESGOS DE SEGURIDAD
 
-1. Use a Regular User Account:
-   - If you plan to schedule this script using a task scheduler, ensure it runs under a non-privileged, regular user account. Avoid using administrative or highly privileged accounts.
+1. Usar una cuenta de usuario normal:
+- Si planea programar este script con un programador de tareas, asegúrese de que se ejecute con una cuenta de usuario normal sin privilegios. Evite usar cuentas administrativas o con privilegios elevados.
 
-2. Set Proper Permissions:
-   - Grant the regular user account read/write access to the directories containing logs and the location where the script will store its action logs.
-   - Restrict access to these folders for all other users to minimize exposure.
+2. Establecer los permisos adecuados:
+- Otorgar a la cuenta de usuario normal acceso de lectura y escritura a los directorios que contienen los registros y a la ubicación donde el script almacenará sus registros de acciones.
+- Restringir el acceso a estas carpetas a todos los demás usuarios para minimizar la exposición.
 
-3. Disable Interactive Logon:
-   - For the user account under which this script will run, ensure interactive logon is disabled. This prevents the account from being used to log into systems directly, reducing the risk of unauthorized access.
+3. Deshabilitar el inicio de sesión interactivo:
+- Para la cuenta de usuario con la que se ejecutará este script, asegúrese de que el inicio de sesión interactivo esté deshabilitado. Esto evita que la cuenta se utilice para iniciar sesión directamente en los sistemas, lo que reduce el riesgo de acceso no autorizado.
 
-### Configure audit policy for control access to the script file
+### Configurar la política de auditoría para controlar el acceso al archivo de script
 
-1. Enable Object Access Auditing
+1. Habilitar la auditoría de acceso a objetos
 ```powershell
-auditpol /set /subcategory:"File System" /success:enable /failure:enable
+auditpol /set /subcategory:"Sistema de archivos" /success:enable /failure:enable
 ```
 
-2. Check config
+2. Verificar la configuración
 ```powershell
-auditpol /get /category:"Object Access"
+auditpol /get /category:"Acceso a objetos"
 ```
 
-3. Enable audit for the script file
+3. Habilitar la auditoría para el archivo de script
 ```powershell
-# Path to the script file
+# Ruta al archivo de script
 $filePath = "C:\Path\To\Get-Log-Archivation.ps1"
 
-# Set auditing rules for Everyone (Success and Modify Access)
+# Establecer reglas de auditoría para Todos (Acceso correcto y modificar)
 icacls $filePath /setaudit Everyone:(OI)(CI)(M) /t /c
 ```
 
-4. Check Audit event logs for the messages
+4. Verificar los registros de eventos de auditoría para los mensajes
 
-- Event ID: 4663 (File Access)
+- ID de evento: 4663 (Acceso a archivos)
 
 ```powershell
-# Define variables
-$LogName = "Security"
+# Definir variables
+$LogName = "Seguridad"
 $EventID = 4663
 $FilePath = "C:\Path\To\Get-Log-Archivation.ps1"
 
-# Filter and display events
+# Filtrar y mostrar eventos
 Get-WinEvent -LogName $LogName | Where-Object {
-    $_.Id -eq $EventID -and $_.Message -match $FilePath
+$_.Id -eq $EventID -and $_.Message -match $FilePath
 } | Select-Object TimeCreated, Id, Message
 
-# Export to CSV
+# Exportar a CSV
 Get-WinEvent -LogName $LogName | Where-Object {
-    $_.Id -eq $EventID -and $_.Message -match $FilePath
+$_.Id -eq $EventID -and $_.Message -match $FilePath
 } | Select-Object TimeCreated, Id, Message | Export-Csv -Path "C:\Temp\FilteredEvents.csv" -NoTypeInformation
 
-# Export to TXT
+# Exportar a TXT
 Get-WinEvent -LogName $LogName | Where-Object {
-    $_.Id -eq $EventID -and $_.Message -match $FilePath
+$_.Id -eq $EventID -and $_.Message -match $FilePath
 } | Select-Object TimeCreated, Id, Message | Out-File -FilePath "C:\Temp\FilteredEvents.txt"
 
 ```
-
-### ⚠️ Disclaimer
-
- All scripts are provided as-is with no implicit warranty or support.
-
-- Always test scripts in a DEV/TEST environment before using them in production.
-- Use at your own risk!
