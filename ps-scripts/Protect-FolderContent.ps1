@@ -17,8 +17,7 @@ function Protect-FolderContent {
 
         .NOTES
             Version: 1.1
-            Author: M. Zaikin
-            Date: 19-Apr-2025
+            Author:  Undefined_name
     #>
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
