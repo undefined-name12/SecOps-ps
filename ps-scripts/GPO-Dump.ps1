@@ -33,8 +33,7 @@ Function GPO-Dump
             
             ---------------------
                Version: 1.0
-               Author:  M. Zaikin
-               Date:    2025-03-13
+               Author:  Undefined_name
             
         [-------------------------------------DISCLAIMER-------------------------------------]
         This script is provided "AS IS" without warranty of any kind, express or implied.
