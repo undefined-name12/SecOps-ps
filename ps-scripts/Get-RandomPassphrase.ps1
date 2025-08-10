@@ -16,8 +16,7 @@ function Get-RandomPassphrase {
 
     .NOTES
         Version: 1.0
-        Author:  M. Zaikin
-        Date:    2025-04-19
+        Author:  Undefined_name
     #>
     [CmdletBinding()]
     param (
