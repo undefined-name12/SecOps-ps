@@ -21,8 +21,7 @@
                 Paths: list of folders that needs to be monitored for archives
 
             Version: 1.0
-            Author: M. Zaikin
-            Date: 12-Dec-2024
+            Author:  Undefined_name
 
         [-------------------------------------DISCLAIMER-------------------------------------]
          All script are provided as-is with no implicit
