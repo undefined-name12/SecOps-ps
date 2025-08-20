@@ -2,7 +2,6 @@
 
 ## Resumen
 La función **`Obtener Archivo de Registros`** automatiza el archivado de archivos de registro antiguos y mantiene la integridad de las carpetas comprimiendo y eliminando archivos obsoletos. Está diseñada para garantizar una gestión eficiente de los archivos de registro en la infraestructura de TI.
-Además del material descrito a continuación, también puede leer mi artículo publicado en LinkedIn, donde analizo este problema desde una perspectiva ligeramente diferente [https://www.linkedin.com/pulse/mitigating-security-risks-change-requests-maks-zaikin-lh6xe/?trackingId=JsuYjAPi4B7pWuH6T3oVNw%3D%3D](Mitigación de Riesgos de Seguridad en Solicitudes de Cambio de TI)
 
 ---
 
